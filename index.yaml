@@ -2,10 +2,10 @@ apiVersion: v1
 entries:
   myapp:
   - apiVersion: v2
-    created: "2024-09-25T07:59:53.829734063Z"
-    digest: e0b266c0a977c02fb503eccd8caf65eb6aa8f67cb52f874169482bd63d24f229
+    created: "2024-09-25T09:15:11.960087238Z"
+    digest: 8fab4ca119e1f4ba06bf58d8bcde70dd52e0e6d37e028e4a0d7fe7a4af892ec3
     name: myapp
     urls:
     - https://siamese-lang.github.io/rapa-helm-repo/myapp-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-25T07:59:53.829310812Z"
+generated: "2024-09-25T09:15:11.959690077Z"
