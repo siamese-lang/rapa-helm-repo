@@ -1,27 +1,31 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: myingress
+  name: argocd-ingress
+  namespace: argocd
   annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/scheme: internet-facing 
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:505773699493:certificate/d2421721-3e7a-4cea-b901-00fc29d141b7
-    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/target-type: ip # IP 모드 사용
+    alb.ingress.kubernetes.io/scheme: internet-facing # 인터넷 접근 가능한 ALB
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]' # HTTP와 HTTPS 리스너 설정
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:875522371656:certificate/70074836-71ea-471f-b1da-96ae99bc5d5c # ACM 인증서 ARN
+    alb.ingress.kubernetes.io/actions.redirect-to-https: >
+      {"Type": "redirect", "RedirectConfig": {"Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}  # HTTP를 HTTPS로 리디렉션
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz # 헬스체크 경로
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/success-codes: "200"
 spec:
-  # tls:
-  #   - hosts:
-  #       - www.frodo.kr
-  #     secretName: tls-crt 
+  ingressClassName: alb
+  tls:
+    - hosts:
+        - www.abydos.store # HTTPS 연결에 사용될 호스트
   rules:
-  - host: www.frodo.kr
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: myweb
-            port: 
-              number: 80
+    - host: www.abydos.store
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/" # 모든 경로에 대해 트래픽 라우팅
+            backend:
+              service:
+                name: myweb # ArgoCD 서비스 이름
+                port:
+                  number: 80 # ArgoCD 서버 서비스 포트

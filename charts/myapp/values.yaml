@@ -1,5 +1,5 @@
 replicasCount: 1
 
 wasImage:
-  repository: "ekchoi3912/cicdlab_1"
+  repository: "askj95/cicd_test"
   tag: v1
