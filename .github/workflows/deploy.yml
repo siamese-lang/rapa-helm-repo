@@ -1,0 +1,30 @@
+name: Deploy Helm Chart
+
+on:
+  workflow_run:
+    workflows: ["main"]  # 첫 번째 워크플로우 이름
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.7.0  # 사용할 Helm 버전
+
+      - name: Add Helm repository
+        run: helm repo add siamese https://siamese-lang.github.io/helm-repo-test  # Helm 레포지토리 추가
+
+      - name: Update Helm repositories
+        run: helm repo update  # Helm 레포지토리 업데이트
+
+      - name: Install or Upgrade Helm chart
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" > $HOME/.kube/config  # Kubeconfig 파일 생성
+          helm upgrade --install myapp siamese/myapp -f ./charts/myapp/values.yaml  # Helm 차트 설치 또는 업그레이드
