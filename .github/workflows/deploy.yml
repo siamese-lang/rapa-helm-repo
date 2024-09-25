@@ -26,7 +26,7 @@ jobs:
           version: v3.7.0
 
       - name: Add Helm repository
-        run: helm repo add siamese https://siamese-lang.github.io/rapa-helm-repo
+        run: helm repo add myapp https://siamese-lang.github.io/rapa-helm-repo
 
       - name: Update Helm repositories
         run: helm repo update
@@ -39,4 +39,4 @@ jobs:
 
       - name: Install or Upgrade Helm chart
         run: |
-          helm upgrade --install myapp siamese/myapp  # Helm 차트 설치 또는 업그레이드
+          helm upgrade --install java-app myapp/myapp  # Helm 차트 설치 또는 업그레이드
