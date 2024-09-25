@@ -24,7 +24,12 @@ jobs:
       - name: Update Helm repositories
         run: helm repo update  # Helm 레포지토리 업데이트
 
+      - name: Create Kubeconfig directory
+        run: mkdir -p $HOME/.kube  # Kubeconfig 디렉토리 생성
+
+      - name: Set up Kubeconfig
+        run: echo "${{ secrets.KUBE_CONFIG_DATA }}" > $HOME/.kube/config  # Kubeconfig 파일 생성
+
       - name: Install or Upgrade Helm chart
         run: |
-          echo "${{ secrets.KUBE_CONFIG_DATA }}" > $HOME/.kube/config  # Kubeconfig 파일 생성
           helm upgrade --install myapp siamese/myapp -f ./charts/myapp/values.yaml  # Helm 차트 설치 또는 업그레이드
