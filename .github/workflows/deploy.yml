@@ -2,7 +2,7 @@ name: Deploy Helm Chart
 
 on:
   workflow_run:
-    workflows: ["release"]  # 첫 번째 워크플로우 이름
+    workflows: ["deploy"]  # 첫 번째 워크플로우 이름
     types:
       - completed
 
