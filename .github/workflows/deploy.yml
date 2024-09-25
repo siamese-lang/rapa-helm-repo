@@ -39,4 +39,4 @@ jobs:
 
       - name: Install or Upgrade Helm chart
         run: |
-          helm upgrade --install myapp siamese/myapp -f ./charts/myapp/values.yaml  # Helm 차트 설치 또는 업그레이드
+          helm upgrade --install myapp https://siamese-lang.github.io/helm-repo-test/myapp  # Helm 차트 설치 또는 업그레이드
