@@ -1,5 +1,5 @@
-replicasCount: 4
+replicasCount: 2
 
 wasImage:
   repository: "ekchoi3912/cicdlab_1"
-  tag: v4
+  tag: v2
